@@ -16,3 +16,24 @@ resource "aws_subnet" "my_subnet" {
     Name = "SUBNET1"
   }
 }
+
+# Create a network interface
+resource "aws_network_interface" "netin" {
+  subnet_id   = aws_subnet.my_subnet.id
+  private_ips = ["172.16.10.100"]
+
+  tags = {
+    Name = "primary_network_interface"
+  }
+}
+
+# Create a new instance
+resource "aws_instance" "instance" {
+  ami           = "ami-005e54dee72cc1d00" # us-west-2
+  instance_type = "t2.micro"
+
+  network_interface {
+    network_interface_id = aws_network_interface.netin.id
+    device_index         = 0
+  }
+}
