@@ -37,3 +37,13 @@ resource "aws_instance" "instance" {
     device_index         = 0
   }
 }
+
+# Create an S3 bucket
+resource "aws_s3_bucket" "bucket" {
+  bucket = "vidushi-spacelift-bucket"
+
+  tags = {
+    Name        = "vidushi-spacelift-bucket"
+    Company      = "Knoldus-Nash"
+  }
+}
